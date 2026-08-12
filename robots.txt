@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /sequence/
+
+Sitemap: https://azoozdwd-ai.github.io/M-Power-Protection/sitemap.xml
