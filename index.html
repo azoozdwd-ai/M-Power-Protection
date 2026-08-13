@@ -1389,9 +1389,24 @@ h1.hero-title em{font-style:normal;color:transparent;background:var(--gold-grad)
 
   function scrollProgress() {
     if (reduceMotion) return 0;
-    var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
-    if (max <= 0) return 0;
-    return Math.min(Math.max(window.scrollY / max, 0), 1);
+    var ids = ['why', 'services', 'portfolio', 'faq', 'order'];
+    var y = window.scrollY;
+    var first = document.getElementById(ids[0]);
+    var last = document.getElementById(ids[ids.length - 1]);
+    if (!first || !last) return 0;
+    var end = last.offsetTop + last.offsetHeight;
+    if (y <= first.offsetTop) return 0;
+    if (y >= end) return 1;
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (!el) continue;
+      var top = el.offsetTop, bottom = top + el.offsetHeight;
+      if (y >= top && y < bottom) {
+        var within = (y - top) / (bottom - top);
+        return Math.min(Math.max((i + within) / ids.length, 0), 1);
+      }
+    }
+    return 0;
   }
 
   var displayed = -1;
